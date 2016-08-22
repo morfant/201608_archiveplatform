@@ -156,6 +156,21 @@ SynthDef(\tak, {| out = 0, freq = 300, modfreq = 5, amp = 0.6, amp2 = 0.9, filfr
 	Out.ar(out, Pan2.ar((lowcut_sig) * env, pan, amp));
 }).add;
 
+SynthDef(\tak2, {| out = 0, freq = 300, modfreq = 5, amp = 0.6, amp2 = 0.9, filfreq = 3200, rq = 0.1, gate = 1,
+	atTime = 0.1, susTime = 2.0, relTime = 0.1, pan = 0 |
+
+	var sig, env, sig2, del, mod, lowcut_sig;
+	mod = LFSaw.kr(1/10, add: 1);
+    sig = LFCub.ar(MouseY.kr(280, 820).poll*0.38, mod);
+	sig2 = Impulse.ar(0, mul: amp2);
+	sig = BPF.ar((sig+sig2), filfreq, rq, sig*0.3);
+	sig = DelayN.ar(sig, 0.4, 0.1, add: sig*0.3);
+	lowcut_sig = HPF.ar(sig, 100);
+    env = EnvGen.kr(Env.linen(atTime, susTime, relTime, curve: 6), gate, doneAction: 2);
+	// Out.ar(0, Pan2.ar((sig) * env, pan, amp));
+	Out.ar(out, Pan2.ar((lowcut_sig) * env, pan, amp));
+}).add;
+
 
 
 //Synth 4
