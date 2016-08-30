@@ -31,15 +31,15 @@ d = Synth(\bass, [\freqs, #[920, 870, 880, 760], \amp, 6, \envdur, 2.5]);~pb2_2.
 
 
 
+
+
 //-------여기-------
+~masterEQ.gui.onSelect('normal');
 
-~masterEQ.gui.onSelect('text');c = Synth(\dds, [\freq, 700, \amp, 1.0, \filfreq, 300, \susTime, 50, \nf, 9]); // 민씨 바구니 버리고 센터로 나오면
-
+~masterEQ.gui.onSelect('text');c = Synth(\dds, [\freq, 700, \amp, 1.0, \filfreq, 300, \susTime, 150, \nf, 9]); // 민씨 바구니 버리고 센터로 나오면
 d = Synth(\bass, [\freqs, #[920, 870, 880, 760], \amp, 7, \envdur, 2.5]);~pb2_2.play; //tv 손모양에 맞추어서 TV
-
-c.release(1.1);
-c.release(0.1);
+c.release(0.6);
 
 
 //--------------niga 니가 그랬잖아...----------------
-~masterEQ.gui.onSelect('x_flat');u = Synth(\niga, [\amp, 0.3]);  //민하씨 혼자 춤 추다가 양팔을 상하 대각선으로 펼치는 동작이 다 끝나면
+~masterEQ.gui.onSelect('normal');u = Synth(\niga, [\amp, 0.2]);  //민하씨 혼자 춤 추다가 양팔을 상하 대각선으로 펼치는 동작이 다 끝나면

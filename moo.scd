@@ -3,8 +3,7 @@
 
 
 //~pm4를 조금씩 시간차를 주어서 실행시킨다. 무 씬?
-~masterEQ.gui.onSelect('moo');
-~pm4Syn = Array.newClear(20);
+~masterEQ.gui.onSelect('moo');~pm4Syn = Array.newClear(20);
 ~pm4Syn[0] = ~pm4.play;~pbPlay_4 = ~pb3_4.play;~pbPlay_5 = ~pb3_5.play; //베이스 + 미들 + 하이
 ~pbPlay_4 = ~pb3_4.play;~pbPlay_5 = ~pb3_5.play; //베이스 + 미들
 ~pbPlay_5 = ~pb3_5.play; //미들
@@ -42,4 +41,4 @@
 
 
 //--------------나경화의저서...----------------
-~masterEQ.gui.onSelect('x_flat');n = Synth(\na, [\amp, 0.75]); //na - 민씨가 맥심 받았을 때
+~masterEQ.gui.onSelect('normal');n = Synth(\na, [\amp, 0.6]); //na - 민씨가 맥심 받았을 때

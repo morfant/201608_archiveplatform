@@ -22,11 +22,18 @@ but_1 = Button(window, Rect(20, 20, 50, 50))
         ])
         .action_({ arg butt;
 
+    ~masterEQ.gui.onSelect('string_flat');
+
+
 	dval = 0.32;
 	("DVAL RESET " + dval).postln;
 	changeStreamValue.value(dval);
 
-	n.sendMsg("/1/fader1", dval);
+    // n.sendMsg("/1/fader1", dval);
+
+    // ampval = 1;
+    // changeAmp.value(ampval);
+
 	butt.value.postln;
 
 });
@@ -36,6 +43,8 @@ but_2 = Button(window, Rect(80, 20, 50, 50))
             ["Go2", Color.cyan, Color.grey]
         ])
         .action_({ arg butt;
+
+    ~masterEQ.gui.onSelect('string_2');
 
     dval = 0.42;
 	("DVAL RESET " + dval).postln;
@@ -51,10 +60,15 @@ but_3 = Button(window, Rect(140, 20, 50, 50))
         ])
         .action_({ arg butt;
 
+
+    ~masterEQ.gui.onSelect('string_2');
+
     dval = 0.55;
 	("DVAL RESET " + dval).postln;
 	changeStreamValue.value(dval);
 
+    // ampval = 0.9;
+    // changeAmp.value(ampval);
 	butt.value.postln;
 
 });
@@ -64,6 +78,9 @@ but_4= Button(window, Rect(200, 20, 50, 50))
             ["Go4", Color.cyan, Color.grey]
         ])
         .action_({ arg butt;
+
+
+    // ~masterEQ.gui.onSelect('string_flat');
 
     // var val = 0.57;
     // ("DVAL RESET " + val).postln;
@@ -92,7 +109,7 @@ changeStreamValue = {|arg_dval|
 		\legato, 0.5,
 		\freq, Pseq([100, 500, 300, 200] * arg_dval, inf),
 		\susTime, 8.0,
-		\amp, 0.4*ampMul + 20
+		\amp, 0.4*ampMul + 30
 ).asStream;
 };
 
@@ -108,7 +125,7 @@ changeSustainTime = {|arg_sus|
 		\legato, 0.5,
 		\freq, Pseq([100, 500, 300, 200] * dval, inf),
 		\susTime, arg_sus,
-		\amp, 0.4*ampMul + 20
+		\amp, 0.4*ampMul + 30
 ).asStream;
 };
 
@@ -124,7 +141,7 @@ changeAmp = {|arg_amp|
 		\legato, 0.5,
 		\freq, Pseq([100, 500, 300, 200] * dval, inf),
 		\susTime, susval,
-		\amp, (0.4*ampMul + 20) * arg_amp
+		\amp, (0.4*ampMul + 30) * arg_amp
 ).asStream;
 };
 
@@ -160,11 +177,15 @@ oscResps[5] = OSCFunc({|msg, time, addr, recvPort|
 	// m = NetAddr("192.168.1.3", 9000);
 	// m = NetAddr("169.254.110.195", 9000);	//giy air
 	// m = NetAddr("172.30.1.4", 9000);	//giy air
-	n.sendMsg("/1/fader1", dval);
+    // n.sendMsg("/1/fader1", dval);
 
 
 
 }, '/1/toggle1');
+
+
+CmdPeriod.doOnce{ window.close; };
+
 )
 
 
@@ -172,12 +193,12 @@ oscResps[5] = OSCFunc({|msg, time, addr, recvPort|
 //volume 0에서 조금 빠른 페이드 인으로.
 //무용수의 앞뒤 거리에 따라 음색, 음고 조정
 
-
-(//Pattern
+//Pattern
+(
 var rec = 0,
 bassFreq = 76, bassFreqMax = 80,
 hatFreq = 1000,
-timeMul = 1, ampMul = 100,
+timeMul = 1, ampMul = 60,
 onebeat = 2.666666666666/4, // 4 * beat = 1 bar
 syn = 0;
 
@@ -196,7 +217,7 @@ SystemClock.sched(
 });
 
 
-~masterEQ.gui.onSelect('string');
+~masterEQ.gui.onSelect('string_flat');
 
 ~pbPlay_1 = ~pb1 = Pbind(
 	\instrument,        \tak,
@@ -207,7 +228,7 @@ SystemClock.sched(
 	\freq, Pseq([100, 500, 300, 200]/4, inf),
 	// \freq, Pseq([100, 100, 100, 100]/4, inf),
 	\susTime, 0.01,
-	\amp, 0.4*ampMul + 12
+	\amp, 0.4*ampMul + 30
 ).play;
 
 

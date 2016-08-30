@@ -81,6 +81,15 @@ SynthDef(\bolero,
 	Out.ar(0, Pan2.ar((sig1) * env, pan, amp));
 }).add;
 
+SynthDef(\boleroFadeIn,
+	{| freq = 1, bufnum = 0, gate = 1, amp = 0.1, pan = 0, rate = 1, loop = 0 |
+		var sig1, env;
+		sig1 = PlayBuf.ar(2, ~bolero, BufRateScale.kr(~bolero)*rate, startPos: 0, loop: loop, doneAction: 2);
+		env = EnvGen.kr(Env.linen(2.5, ~bolero.numFrames/s.sampleRate, 0.2), gate, doneAction:2);
+	//env = EnvGen.kr(Env.perc(atTime, relTime), gate, doneAction: 2);
+	Out.ar(0, Pan2.ar((sig1) * env, pan, amp));
+}).add;
+
 /*SynthDef(\love,
 	{| freq = 1, bufnum = 0, gate = 1, amp = 0.1, pan = 0, rate = 1, loop = 1 |
 		var sig1, env;
@@ -277,36 +286,31 @@ SynthDef(\ten, {| freq = 500, modfreq = 5, amp = 0.4, amp2 = 0.9, filfreq = 300,
 	// Out.ar(0, Pan2.ar((sig + lowcut_sig2) * env, pan, amp));
 }).add;
 
-)
 
-
-
-
-//---------------------------- 3 ----------------------------
-/*(
 //Synth - mic in
-SynthDef(\micIn, {| amp = 1, gate = 1 |
-var sig;
-sig = SoundIn.ar(0);
-Out.ar(0, Pan2.ar(sig, 0, amp));
+SynthDef(\micin, {| amp = 0, gate = 1 |
+    var sig;
+    sig = SoundIn.ar(0);
+    Out.ar(0, Pan2.ar(sig, 0, amp));
 }).add;
 
 
 //Synth - buffer read
-SynthDef(\br,
-{
-		| freq = 1, bufnum = 0, gate = 1, amp = 0.1, pan = 0, rate = 1, loop = 1 |
-		var sig1, sig2, sig3, sig4, sig5, env;
- 		sig1 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: 0, loop: loop, doneAction: 2);
- 		sig2 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 2, loop: loop, doneAction: 2);
- 		sig3 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 10, loop: loop, doneAction: 2);
- 		sig4 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 100, loop: loop, doneAction: 2);
-		sig5 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 50, loop: loop, doneAction: 2);
-		env = EnvGen.kr(Env.linen(0.01, ~buf.numFrames/s.sampleRate, 0.2), gate, doneAction:2);
-		//env = EnvGen.kr(Env.perc(atTime, relTime), gate, doneAction: 2);
-		Out.ar(0, Pan2.ar((sig1 + sig2 + sig3 + sig4 + sig5) * env, pan, amp));
-}).add;
-)*/
+// SynthDef(\br,
+//     {
+//         | freq = 1, bufnum = 0, gate = 1, amp = 0.1, pan = 0, rate = 1, loop = 1 |
+//         var sig1, sig2, sig3, sig4, sig5, env;
+//         sig1 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: 0, loop: loop, doneAction: 2);
+//         sig2 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 2, loop: loop, doneAction: 2);
+//         sig3 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 10, loop: loop, doneAction: 2);
+//         sig4 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 100, loop: loop, doneAction: 2);
+//         sig5 = PlayBuf.ar(1, ~buf, BufRateScale.kr(~buf)*rate, startPos: s.sampleRate * 50, loop: loop, doneAction: 2);
+//         env = EnvGen.kr(Env.linen(0.01, ~buf.numFrames/s.sampleRate, 0.2), gate, doneAction:2);
+//         //env = EnvGen.kr(Env.perc(atTime, relTime), gate, doneAction: 2);
+//         Out.ar(0, Pan2.ar((sig1 + sig2 + sig3 + sig4 + sig5) * env, pan, amp));
+// }).add;
+
+)
 
 
 //---------------------------- 4 ----------------------------
@@ -549,7 +553,7 @@ SystemClock.sched(
 		], inf),
 	\envdur, 0.1,
 	\susTime, 0.01,
-	\amp, 0.3*ampMul * 7
+	\amp, 0.3*ampMul * 4
 );
 
 ~os1.free;~os2.free;~os3.free;
